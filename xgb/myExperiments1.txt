@@ -1,0 +1,63 @@
+Sun, 26 Jun 2016 23:18:08 INFO     xgboost
+Sun, 26 Jun 2016 23:18:08 INFO     size 10.0
+Sun, 26 Jun 2016 23:18:08 INFO     x_step 0.2
+Sun, 26 Jun 2016 23:18:08 INFO     y_step 0.2
+Sun, 26 Jun 2016 23:18:08 INFO     x_border_augment 0.025
+Sun, 26 Jun 2016 23:18:08 INFO     y_border_augment 0.0125
+Sun, 26 Jun 2016 23:18:08 INFO     th 5
+Sun, 26 Jun 2016 23:18:08 INFO     k 25
+Sun, 26 Jun 2016 23:18:08 INFO     Loading data ...
+Sun, 26 Jun 2016 23:18:50 INFO     Solving
+Sun, 26 Jun 2016 23:21:42 INFO     Row 1/50 elapsed time: 171.80 seconds
+Sun, 26 Jun 2016 23:25:34 INFO     Row 2/50 elapsed time: 232.14 seconds
+Sun, 26 Jun 2016 23:29:38 INFO     Row 3/50 elapsed time: 244.45 seconds
+Sun, 26 Jun 2016 23:33:49 INFO     Row 4/50 elapsed time: 251.28 seconds
+Sun, 26 Jun 2016 23:37:49 INFO     Row 5/50 elapsed time: 239.31 seconds
+Sun, 26 Jun 2016 23:41:52 INFO     Row 6/50 elapsed time: 242.84 seconds
+Sun, 26 Jun 2016 23:46:14 INFO     Row 7/50 elapsed time: 262.84 seconds
+Sun, 26 Jun 2016 23:50:39 INFO     Row 8/50 elapsed time: 264.64 seconds
+Sun, 26 Jun 2016 23:55:12 INFO     Row 9/50 elapsed time: 273.21 seconds
+Sun, 26 Jun 2016 23:59:46 INFO     Row 10/50 elapsed time: 273.39 seconds
+Mon, 27 Jun 2016 00:04:20 INFO     Row 11/50 elapsed time: 274.24 seconds
+Mon, 27 Jun 2016 00:09:04 INFO     Row 12/50 elapsed time: 284.19 seconds
+Mon, 27 Jun 2016 00:13:58 INFO     Row 13/50 elapsed time: 294.18 seconds
+Mon, 27 Jun 2016 00:18:52 INFO     Row 14/50 elapsed time: 293.59 seconds
+Mon, 27 Jun 2016 00:23:46 INFO     Row 15/50 elapsed time: 294.33 seconds
+Mon, 27 Jun 2016 00:28:24 INFO     Row 16/50 elapsed time: 277.54 seconds
+Mon, 27 Jun 2016 00:33:06 INFO     Row 17/50 elapsed time: 281.95 seconds
+Mon, 27 Jun 2016 00:37:43 INFO     Row 18/50 elapsed time: 277.70 seconds
+Mon, 27 Jun 2016 00:42:17 INFO     Row 19/50 elapsed time: 273.44 seconds
+Mon, 27 Jun 2016 00:47:04 INFO     Row 20/50 elapsed time: 287.19 seconds
+Mon, 27 Jun 2016 00:51:43 INFO     Row 21/50 elapsed time: 278.58 seconds
+Mon, 27 Jun 2016 00:56:31 INFO     Row 22/50 elapsed time: 288.15 seconds
+Mon, 27 Jun 2016 01:01:16 INFO     Row 23/50 elapsed time: 285.22 seconds
+Mon, 27 Jun 2016 01:06:03 INFO     Row 24/50 elapsed time: 286.93 seconds
+Mon, 27 Jun 2016 01:10:51 INFO     Row 25/50 elapsed time: 287.91 seconds
+Mon, 27 Jun 2016 01:16:00 INFO     Row 26/50 elapsed time: 309.50 seconds
+Mon, 27 Jun 2016 01:21:05 INFO     Row 27/50 elapsed time: 304.33 seconds
+Mon, 27 Jun 2016 01:25:51 INFO     Row 28/50 elapsed time: 285.84 seconds
+Mon, 27 Jun 2016 01:30:32 INFO     Row 29/50 elapsed time: 281.45 seconds
+Mon, 27 Jun 2016 01:35:10 INFO     Row 30/50 elapsed time: 278.46 seconds
+Mon, 27 Jun 2016 01:39:54 INFO     Row 31/50 elapsed time: 283.83 seconds
+Mon, 27 Jun 2016 01:44:40 INFO     Row 32/50 elapsed time: 285.79 seconds
+Mon, 27 Jun 2016 01:49:09 INFO     Row 33/50 elapsed time: 268.75 seconds
+Mon, 27 Jun 2016 01:53:57 INFO     Row 34/50 elapsed time: 287.98 seconds
+Mon, 27 Jun 2016 01:58:34 INFO     Row 35/50 elapsed time: 277.05 seconds
+Mon, 27 Jun 2016 02:03:39 INFO     Row 36/50 elapsed time: 304.86 seconds
+Mon, 27 Jun 2016 02:08:36 INFO     Row 37/50 elapsed time: 296.92 seconds
+Mon, 27 Jun 2016 02:13:23 INFO     Row 38/50 elapsed time: 287.42 seconds
+Mon, 27 Jun 2016 02:18:04 INFO     Row 39/50 elapsed time: 281.20 seconds
+Mon, 27 Jun 2016 02:22:44 INFO     Row 40/50 elapsed time: 279.62 seconds
+Mon, 27 Jun 2016 02:27:21 INFO     Row 41/50 elapsed time: 276.96 seconds
+Mon, 27 Jun 2016 02:31:53 INFO     Row 42/50 elapsed time: 272.10 seconds
+Mon, 27 Jun 2016 02:36:17 INFO     Row 43/50 elapsed time: 264.35 seconds
+Mon, 27 Jun 2016 02:40:45 INFO     Row 44/50 elapsed time: 268.04 seconds
+Mon, 27 Jun 2016 02:45:09 INFO     Row 45/50 elapsed time: 263.54 seconds
+Mon, 27 Jun 2016 02:49:20 INFO     Row 46/50 elapsed time: 251.65 seconds
+Mon, 27 Jun 2016 02:53:20 INFO     Row 47/50 elapsed time: 239.08 seconds
+Mon, 27 Jun 2016 02:57:06 INFO     Row 48/50 elapsed time: 226.74 seconds
+Mon, 27 Jun 2016 03:00:40 INFO     Row 49/50 elapsed time: 213.32 seconds
+Mon, 27 Jun 2016 03:03:04 INFO     Row 50/50 elapsed time: 144.53 seconds
+Mon, 27 Jun 2016 03:03:04 INFO     Generating submission file ...
+Mon, 27 Jun 2016 03:03:13 INFO     nan
+Mon, 27 Jun 2016 03:03:28 INFO     finished**

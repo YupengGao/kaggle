@@ -1,0 +1,127 @@
+Mon, 27 Jun 2016 10:52:16 INFO     xgboost
+Mon, 27 Jun 2016 10:52:16 INFO     size 10.0
+Mon, 27 Jun 2016 10:52:16 INFO     x_step 0.2
+Mon, 27 Jun 2016 10:52:16 INFO     y_step 0.2
+Mon, 27 Jun 2016 10:52:16 INFO     x_border_augment 0.0125
+Mon, 27 Jun 2016 10:52:16 INFO     y_border_augment 0.0125
+Mon, 27 Jun 2016 10:52:16 INFO     th 5
+Mon, 27 Jun 2016 10:52:16 INFO     k 25
+Mon, 27 Jun 2016 10:52:16 INFO     Loading data ...
+Mon, 27 Jun 2016 10:53:00 INFO     Solving
+Mon, 27 Jun 2016 10:53:01 INFO     Row 1/50 elapsed time: 1.64 seconds
+Mon, 27 Jun 2016 11:02:23 INFO     Row 2/50 elapsed time: 561.86 seconds
+Mon, 27 Jun 2016 11:02:23 INFO     Row 3/50 elapsed time: 0.26 seconds
+Mon, 27 Jun 2016 11:02:24 INFO     Row 4/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:24 INFO     Row 5/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:24 INFO     Row 6/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:24 INFO     Row 7/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:24 INFO     Row 8/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:25 INFO     Row 9/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:25 INFO     Row 10/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:25 INFO     Row 11/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:25 INFO     Row 12/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:26 INFO     Row 13/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:26 INFO     Row 14/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:26 INFO     Row 15/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:26 INFO     Row 16/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:27 INFO     Row 17/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:27 INFO     Row 18/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:27 INFO     Row 19/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:27 INFO     Row 20/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:28 INFO     Row 21/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:28 INFO     Row 22/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:28 INFO     Row 23/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:28 INFO     Row 24/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:29 INFO     Row 25/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:29 INFO     Row 26/50 elapsed time: 0.25 seconds
+Mon, 27 Jun 2016 11:02:29 INFO     Row 27/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:29 INFO     Row 28/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:30 INFO     Row 29/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:30 INFO     Row 30/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:30 INFO     Row 31/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:30 INFO     Row 32/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:30 INFO     Row 33/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:31 INFO     Row 34/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:31 INFO     Row 35/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:31 INFO     Row 36/50 elapsed time: 0.25 seconds
+Mon, 27 Jun 2016 11:02:31 INFO     Row 37/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:32 INFO     Row 38/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:32 INFO     Row 39/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:32 INFO     Row 40/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:32 INFO     Row 41/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:33 INFO     Row 42/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:33 INFO     Row 43/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:33 INFO     Row 44/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:33 INFO     Row 45/50 elapsed time: 0.24 seconds
+Mon, 27 Jun 2016 11:02:34 INFO     Row 46/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:34 INFO     Row 47/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:34 INFO     Row 48/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:34 INFO     Row 49/50 elapsed time: 0.23 seconds
+Mon, 27 Jun 2016 11:02:35 INFO     Row 50/50 elapsed time: 0.22 seconds
+Mon, 27 Jun 2016 11:02:35 INFO     Generating submission file ...
+Mon, 27 Jun 2016 11:02:40 INFO     nan
+Mon, 27 Jun 2016 11:02:41 INFO     finished**
+
+
+     test-merror-mean  test-merror-std  train-merror-mean  train-merror-std
+0            0.440454         0.006045           0.406943          0.002177
+1            0.428697         0.004635           0.384529          0.003338
+2            0.421199         0.004668           0.367913          0.002954
+3            0.414302         0.007522           0.353784          0.002493
+4            0.409628         0.007509           0.342618          0.002335
+5            0.406156         0.008771           0.333256          0.001250
+6            0.402685         0.008225           0.323907          0.001588
+7            0.400324         0.008216           0.315772          0.001562
+8            0.397269         0.007518           0.308216          0.001610
+9            0.395464         0.007708           0.300509          0.001188
+10           0.392918         0.006306           0.293381          0.001015
+11           0.389308         0.006267           0.285466          0.001801
+12           0.386716         0.004741           0.278524          0.001901
+13           0.385559         0.005469           0.272286          0.001844
+14           0.383337         0.005050           0.265945          0.002364
+15           0.381115         0.005375           0.259697          0.002231
+16           0.379495         0.005379           0.253680          0.002080
+17           0.378014         0.006259           0.247802          0.002339
+18           0.376487         0.006422           0.241645          0.002502
+19           0.374497         0.006492           0.235790          0.002542
+20           0.373710         0.006908           0.230375          0.002881
+21           0.372043         0.006376           0.224971          0.002811
+22           0.371812         0.005577           0.220400          0.002608
+23           0.371349         0.006310           0.215668          0.002869
+24           0.370932         0.006344           0.210704          0.002900
+25           0.370655         0.006544           0.206144          0.002617
+26           0.369498         0.006651           0.201365          0.002435
+27           0.368480         0.006929           0.196609          0.002454
+28           0.367970         0.007196           0.191912          0.002519
+29           0.366813         0.006978           0.188139          0.002283
+..                ...              ...                ...               ...
+131          0.347929         0.005174           0.008401          0.000129
+132          0.347975         0.005019           0.008112          0.000161
+133          0.347697         0.004669           0.007857          0.000235
+134          0.347466         0.004441           0.007545          0.000273
+135          0.347605         0.004585           0.007359          0.000214
+136          0.347281         0.004820           0.007117          0.000183
+137          0.347651         0.005130           0.006885          0.000300
+138          0.347744         0.005528           0.006619          0.000278
+139          0.347605         0.005129           0.006399          0.000221
+140          0.347697         0.005365           0.006202          0.000224
+141          0.347512         0.005532           0.005994          0.000236
+142          0.347558         0.005452           0.005763          0.000292
+143          0.347281         0.005874           0.005589          0.000260
+144          0.347281         0.006061           0.005334          0.000275
+145          0.347142         0.006144           0.005207          0.000207
+146          0.347327         0.006066           0.005103          0.000195
+147          0.347142         0.006112           0.004941          0.000318
+148          0.347049         0.005982           0.004791          0.000294
+149          0.346679         0.005902           0.004605          0.000239
+150          0.346679         0.005625           0.004501          0.000257
+151          0.346679         0.005790           0.004409          0.000257
+152          0.346494         0.005613           0.004200          0.000310
+153          0.346540         0.005305           0.004119          0.000312
+154          0.346263         0.005105           0.003981          0.000322
+155          0.346355         0.005225           0.003749          0.000455
+156          0.346401         0.005202           0.003645          0.000437
+157          0.346448         0.005368           0.003506          0.000434
+158          0.346448         0.005449           0.003344          0.000501
+159          0.346216         0.005587           0.003205          0.000450
+160          0.346031         0.005784           0.003101          0.000445

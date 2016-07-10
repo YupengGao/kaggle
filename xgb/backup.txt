@@ -1,0 +1,245 @@
+#!/usr/bin/env python
+from pyspark import SparkContext
+sc = SparkContext(appName="PythonProject", pyFiles=['lib.zip'])
+import numpy as np
+import argparse
+import time
+from scipy.io import arff
+from lib.splitter import split
+from lib.bagger import get_size_no, partition, bag, pair, cartesian
+from lib.kmm import computeBeta
+from lib.evaluation import computeNMSE
+from lib.scaleKMM import *;
+from lib.util import *
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-b', "--bagging", type=int, choices=[1,2,3,4], default=1, help="bagging strategy")
+    parser.add_argument("-t", "--training", type=int, default=12000, help="size of training data")
+    parser.add_argument("-r", "--reverse", action="store_true", help="set -t as the size of test data")
+    parser.add_argument("-s", "--tr_bsize", type=int, help="the sample size of train set")
+    parser.add_argument("-x", "--te_bsize", type=int, help="the sample size of test set")
+    parser.add_argument("-m", "--train_samples", type=int, help="number of samples from training")
+    parser.add_argument("-n", "--test_samples", type=int, help="number of samples from test")
+    #parser.add_argument("-i", "--input", type=str, default='./dataset/powersupply.arff', help="default input file")
+    parser.add_argument("-i", "--input", type=str, default='/home/wzyCode/scalablelearning/dataset/kdd.arff', help="default input file")
+    parser.add_argument("-o", "--output", type=str, default='/home/wzyCode/scalablelearning/nmse.txt', help="default output file")
+    parser.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
+    args = parser.parse_args()
+
+    mode = args.bagging # bagging strategy
+    training_size = args.training # training set size (small training set)
+    reverse = args.reverse # flip training to test (small test set)
+    tr_bsize = args.tr_bsize # By default, the train bag size is dynamic, if specified, the train bag size will fix
+    te_bsize = args.te_bsize # By default, the test bag size is dynamic, if specified, the test bag size will fix
+    m = args.train_samples # take m samples from training
+    n = args.test_samples # take n samples from test
+    input_file = args.input # input file path
+    output_file = args.output # output file path
+    
+    #sc = SparkContext()
+    
+    # Step 1: Generate biased train and test set, as well as the orginal beta for train set
+    start = time.time()
+
+    train, train_beta, test = split(input_file, training_size, reverse)
+    
+    #trianBroad = sc.broadcast(train)
+    #train_data = np.array(trianBroad.value)
+    train_data = np.array(train)
+    #testBoard = sc.broadcast(test)
+    #test_data = np.array(testBoard.value)
+    test_data = np.array(test)
+    orig_beta_data = np.array(train_beta)
+    
+    #np.savetxt("train_data.txt",train_data);
+    #np.savetxt("test_data.txt",test_data);
+    #np.savetxt("test_data.txt",test_data);
+    
+    end = time.time()
+    split_time = end - start
+    
+    #caculate test data size
+    testData = len(test)
+    te_bsize = testData/n
+    te_bsizeValue = sc.broadcast(te_bsize)
+    
+    
+    # Step 2: Generate the bagging index using different bagging strategies
+    start = time.time()
+
+    # Bagging the train and test data from the sampled index
+    tr_bag_size, tr_bag_no = get_size_no(train_data, tr_bsize, m)
+    te_bag_size, te_bag_no = get_size_no(test_data, te_bsize, n)
+
+    if mode == 1:  # if test is too big, provide x or n to partition test set
+        tr_n = bag(train_data, size=tr_bag_size, sample_no=tr_bag_no)
+        te_n = partition(test_data, part_size=te_bag_size, part_no=te_bag_no)
+    elif mode == 2:  # if train is too big, provide s or m to partition train set
+        tr_n = partition(train_data, part_size=tr_bag_size, part_no=tr_bag_no)
+        te_n = bag(test_data, size=te_bag_size, sample_no=te_bag_no)
+    else: # random sample, no partition
+        tr_n = bag(train_data, size=tr_bag_size, sample_no=tr_bag_no)
+        te_n = bag(test_data, size=te_bag_size, sample_no=te_bag_no)
+
+    if mode < 4:
+        bags = cartesian(train_data, test_data, tr_n, te_n)
+    else:
+        bags = pair(train_data, test_data, tr_n, te_n, sample_no=min(tr_bag_no, te_bag_no))
+
+    rdd = sc.parallelize(bags)
+    #rddCen = rdd
+    #rddEns = rdd
+    end = time.time()
+    bagging_time = end - start
+    
+    
+    # Step 2.1 Bagging the train and test data for EnsKMM
+    start = time.time()
+    tr_bag_size_ens = len(train_data)
+    tr_bag_no_ens = 1
+    te_bag_size_ens, te_bag_no_ens = get_size_no(test_data, te_bsize, n)
+    
+    tr_n_ens = partition(train_data, part_size=tr_bag_size_ens, part_no=tr_bag_no_ens)
+    te_n_ens = partition(test_data, part_size=te_bag_size_ens, part_no=te_bag_no_ens)
+    
+    bags_ens = cartesian(train_data, test_data, tr_n_ens, te_n_ens)
+    rddEns = sc.parallelize(bags_ens)
+    
+    end = time.time()
+    ens_bagging_time = end - start
+    
+    
+    # Step 3.1: Compute the estimated beta from kmm
+    start = time.time()
+    res = rdd.map(lambda (idx, tr, te): computeBeta(idx, tr, te)).flatMap(lambda x: x)
+
+    rdd1 = res.aggregateByKey((0,0), lambda a,b: (a[0] + b, a[1] + 1),
+                              lambda a,b: (a[0] + b[0], a[1] + b[1]))
+
+    est_beta_map = rdd1.mapValues(lambda v: v[0]/v[1]).collectAsMap()
+    est_beta_idx = est_beta_map.keys()
+
+    end = time.time()
+    compute_time = end - start
+    
+    #Step 3.2: Compute the estimated beta from cenKMM
+    start = time.time()
+    maxFeature = train_data.shape[1]
+    gammab = computeKernelWidth(train_data)
+    res = cenKmm(train_data, test_data, gammab, maxFeature)
+    est_Cenbeta = res[0]
+    #est_Cenbeta = getCenKmmBeta(train_data, test_data)
+    
+    end = time.time()
+    compute_time_Cen = end-start
+    #est_Cenbeta,compute_time_Cen = getCenKmmBeta(train_data,test_data)
+
+    
+    
+    #Step 3.3: Compute the estimated beta from ensKMM
+    start = time.time()
+    
+    #rddEns = rddEns.map(lambda (idx, tr, te): (len(idx), len(tr), len(te)))
+    #print "rddEns",rddEns.take(5)
+    #print "te_bsizeValue",te_bsizeValue.value
+    rddEns = rddEns.map(lambda (idx, tr, te): getEnsKmmBeta(idx, tr, te, te_bsizeValue.value)).flatMap(lambda x: x)
+  
+    rddEns = rddEns.aggregateByKey((0,0), lambda a,b: (a[0] + b, a[1] + 1),
+                              lambda a,b: (a[0] + b[0], a[1] + b[1]))
+  
+    est_Ensbeta_map = rddEns.mapValues(lambda v: v[0]/v[1]).collectAsMap()
+    est_Ensbeta_idx = est_Ensbeta_map.keys()
+    end = time.time()
+    compute_time_Ens = end - start
+    
+    
+    # Step 4.1: Compute the NMSE between the est_beta and orig_beta through KMM
+    start = time.time()
+    
+    est_beta = [est_beta_map[x] for x in est_beta_idx]
+    orig_beta = orig_beta_data[est_beta_idx]
+    final_result = computeNMSE(est_beta, orig_beta)
+
+    end = time.time()
+    evaluate_time = end - start
+    
+    # Step 4.2: Compute the NMSE between the est_beta and orig_beta through CenKMM
+    start = time.time()
+    final_result_Cen = computeNMSE(est_Cenbeta, orig_beta_data)
+#     est_Cenbeta = [est_Cenbeta_map[x] for x in est_Cenbeta_idx]
+#     orig_beta = orig_beta_data[est_Cenbeta_idx]
+#     final_result_Cen = computeNMSE(est_Cenbeta, orig_beta)
+# 
+    end = time.time()
+    evaluateCen_time = end - start
+    
+    
+    # Step 4.3: Compute the NMSE between the est_beta and orig_beta through EnsKMM
+    start = time.time()
+     
+    est_Ensbeta = [est_Ensbeta_map[x] for x in est_Ensbeta_idx]
+    orig_beta = orig_beta_data[est_Ensbeta_idx]
+    final_result_Ens = computeNMSE(est_Ensbeta, orig_beta)
+ 
+    end = time.time()
+    evaluateEns_time = end - start
+    
+    
+    
+    
+    # statistics
+    statistics = "In KMM method, mode=%s, train_size=%i, test_size=%i, tr_bag_size=%i, m=%i, te_bag_size=%i, n=%i\n" % \
+                 (mode, len(train_data), len(test_data), tr_bag_size, tr_bag_no, te_bag_size, te_bag_no)
+    total_time = split_time + bagging_time + compute_time + evaluate_time
+    time_info = "split_time=%s, bagging_time=%s, compute_time=%s, evaluate_time=%s, total_time=%s\n" % \
+                (split_time, bagging_time, compute_time, evaluate_time, total_time)
+    print statistics
+    print time_info
+    
+    message = "The final NMSE for KMM is : %s \n" % final_result
+    print message
+        
+    print "---------------------------------------------------------------------------------------------"
+    
+    statisticsCen = "In CenKMM method, train_size=%i, test_size=%i" % \
+                 (len(train_data), len(test_data))
+    total_time = split_time+compute_time_Cen + evaluateCen_time
+    time_info_Cen = "split_time=%s, compute_time=%s, evaluate_time=%s, total_time=%s\n" % \
+                (split_time,compute_time_Cen, evaluateCen_time, total_time)
+    print statisticsCen
+    print time_info_Cen
+    
+    messageCen = "The final NMSE for CenKMM is : %s \n" % final_result_Cen
+    print messageCen
+    
+    print "---------------------------------------------------------------------------------------------"
+    
+    statisticsEns = "In EnsKMM method, mode=%s, train_size=%i, test_size=%i, tr_bag_size=%i, m=%i, te_bag_size=%i, n=%i\n" % \
+                 (mode, len(train_data), len(test_data), tr_bag_size_ens, tr_bag_no_ens, te_bag_size_ens, te_bag_no_ens)
+    total_time = split_time + ens_bagging_time + compute_time_Ens + evaluateEns_time
+    time_info_Ens = "split_time=%s, bagging_time=%s, compute_time=%s, evaluate_time=%s, total_time=%s\n" % \
+                (split_time, ens_bagging_time, compute_time_Ens, evaluateEns_time, total_time)
+    print statisticsEns
+    print time_info_Ens
+     
+    messageEns = "The final NMSE for EnsKMM is : %s \n" % final_result_Ens
+    print messageEns
+    
+    # Save the result into a text file
+    with open(output_file, 'a') as output_file:
+        #message = "The final NMSE for KMM is : %s \n" % final_result
+        #print message
+        
+        #messageCen = "The final NMSE for CenKMM is : %s \n" % final_result_Cen
+        #print messageCen
+        output_file.write(statistics)
+        output_file.write(time_info)
+        output_file.write(message)
+        
+        output_file.write(statisticsCen)
+        output_file.write(time_info_Cen)
+        output_file.write(messageCen)
+
+if __name__ == '__main__':
+    main()
